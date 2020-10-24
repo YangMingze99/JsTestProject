@@ -1,0 +1,54 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+#view{
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+#banner{
+    width: 600%;
+    transform: translateX(-16.66666%);
+}
+#banner #item {
+    width: 16.666666%;
+    float: left;
+}
+#banner #item a{
+    width: 100%;
+}
+#banner #item a img{
+    width: 100%;
+}
+.clearfix::before,
+.clearfix::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    visibility: hidden;
+    clear:both;
+}
+
+.clearfix {
+    zoom:1;
+}
+
+ul{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    list-style: circle;
+}
+ul li{
+    float: left;
+    margin-left: 15px;
+}
+ul li:first-child{
+    margin-left: 0;
+}
+.active{
+    list-style: disc;
+}
