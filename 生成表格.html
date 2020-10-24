@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Title</title>
+	</head>
+	<body>
+		<button type="button">显示内容</button>
+		<script type="text/javascript">
+			var heads = ['序号', '姓名', '年龄', '性别', '学号', '薪资', '城市', '操作'];
+			var datas = [{
+				name: '欧阳霸天',
+				age: 19,
+				gender: '男',
+				stuId: '1001',
+				salary: '20000',
+				city: '上海'
+			},
+				{
+					name: '令狐霸天',
+					age: 19,
+					gender: '男',
+					stuId: '1001',
+					salary: '20000',
+					city: '北京'
+				},
+				{
+					name: '诸葛霸天',
+					age: 19,
+					gender: '男',
+					stuId: '1001',
+					salary: '20000',
+					city: '南京'
+				},
+				{
+					name: '欧阳炸炸',
+					age: 19,
+					gender: '男',
+					stuId: '1001',
+					salary: '20000',
+					city: '南京'
+				},
+				{
+					name: '欧阳炸炸',
+					age: 19,
+					gender: '男',
+					stuId: '1001',
+					salary: '20000',
+					city: '南京'
+				},
+				{
+					name: '欧阳炸炸1',
+					age: 19,
+					gender: '男',
+					stuId: '1001',
+					salary: '20000',
+					city: '南京'
+				},
+				{
+					name: '欧阳炸炸2',
+					age: 19,
+					gender: '男',
+					stuId: '1001',
+					salary: '20000',
+					city: '南京'
+				},
+				{
+					name: '欧阳炸炸3',
+					age: 19,
+					gender: '男',
+					stuId: '1001',
+					salary: '20000',
+					city: '南京'
+				},
+				{
+					name: '欧阳炸炸4',
+					age: 19,
+					gender: '男',
+					stuId: '1001',
+					salary: '20000',
+					city: '南京'
+				}
+			];
+			document.getElementsByTagName("button")[0].onclick =function (){
+				action(heads,datas);
+			}
+
+
+			/**
+			 *
+			 * @param heads
+			 * @param datas
+			 */
+			function action(heads,datas){
+				var newtableObj = document.createElement("table");
+				newtableObj.style.width = "auto";
+				document.body.appendChild(newtableObj);
+				var trObj = document.createElement("tr");
+				var tdObj = document.createElement("td");
+				var aObj;
+				var index = 1;
+				document.body.appendChild(newtableObj).appendChild(trObj);
+				for (let i = 0; i < heads.length; i++) {
+					tdObj = document.createElement("td");
+					document.body.appendChild(newtableObj).appendChild(trObj).appendChild(tdObj);
+					document.body.appendChild(newtableObj).appendChild(trObj).appendChild(tdObj).innerText = heads[i];
+				}
+				for (var key in datas) {
+					trObj = document.createElement("tr");
+					tdObj = document.createElement("td");
+					document.body.appendChild(newtableObj).appendChild(trObj);
+					document.body.appendChild(newtableObj).appendChild(trObj).appendChild(tdObj);
+					trObj.setAttribute("index",(parseInt(key)+1));
+					tdObj.innerText = parseInt(trObj.getAttribute("index"));
+					for (var Akey in datas[key]) {
+						tdObj = document.createElement("td");
+						document.body.appendChild(newtableObj).appendChild(trObj).appendChild(tdObj);
+						document.body.appendChild(newtableObj).appendChild(trObj).appendChild(tdObj).innerText = datas[key][Akey];
+					}
+					aObj = document.createElement("a");
+					tdObj = document.createElement("td");
+					document.body.appendChild(newtableObj).appendChild(trObj).appendChild(tdObj);
+					document.body.appendChild(newtableObj).appendChild(trObj).appendChild(tdObj).appendChild(aObj);
+					aObj.href='#';
+					aObj.innerText = "删除";
+					aObj.setAttribute("index",index);
+					index++;
+					aObj.onclick = function (){
+						var num = this.getAttribute("index");
+						var tab = this.parentNode.parentNode.parentNode;
+						var trs = tab.children;
+						tab.removeChild(tab.children[num]);
+						for (let i = 1; i < trs.length; i++) {
+							trs[i].setAttribute("index",i);
+							trs[i].children[0].innerText = trs[i].getAttribute("index");
+							trs[i].lastElementChild.firstElementChild.setAttribute("index",i);
+						}
+					}
+				}
+			}
+		</script>
+	</body>
+</html>
