@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #box{
+            width: 600px;
+            height: 400px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <img src="03.jpg" alt="">
+    </div>
+    <script>
+        var boxObj = document.getElementById("box");
+        var imgObj = boxObj.children[0];
+        imgObj.onmousedown = function (e){
+            boxObj .style.position = "relative";
+            imgObj.style.position = "absolute";
+            e.preventDefault();
+            var X = e.offsetX;
+            var Y = e.offsetY;
+            boxObj.onmousemove = function (ev){
+                ev.preventDefault();
+                //移动范围边界
+                var nowY = ev.clientY-Y>=boxObj.offsetHeight-imgObj.offsetHeight?boxObj.offsetHeight-imgObj.offsetHeight:ev.clientY-Y;
+                var nowX = ev.clientX-X>=boxObj.offsetWidth-imgObj.offsetWidth?boxObj.offsetWidth-imgObj.offsetWidth:ev.clientX-X;
+                nowY = nowY>=0? nowY:0;
+                nowX = nowX>=0? nowX:0;
+                imgObj.style.top = nowY+"px";
+                imgObj.style.left = nowX+"px";
+            }
+        }
+        imgObj.onmouseup = function (){
+            boxObj.onmousemove = null;
+        }
+        boxObj.onmouseout = function (){
+            boxObj.onmousemove = null;
+        }
+    </script>
+</body>
+</html>
