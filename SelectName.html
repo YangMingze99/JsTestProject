@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            background-color: #ccc;
+        }
+        #showBox{
+            position: relative;
+            margin: 0 auto;
+            width: 800px;
+            height: 600px;
+            border: 1px solid black;
+            text-align: center;
+            font-size: 56px;
+            line-height: 600px;
+        }
+        #selectedNameBox{
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width:350px;
+            border: 2px dotted red;
+            z-index: 9;
+            color: deeppink;
+            text-align: center;
+            font-size: 35px;
+        }
+
+        #selectedNameBox ol{
+            width: 50%;
+            padding: 0px;
+            margin: 0 auto;
+        }
+        #selectedNameBox ol li{
+            font-size: 30px;
+            text-align: center;
+            color: black;
+            border-bottom: 1px dotted black;
+        }
+
+        input[type="button"]{
+            margin: 0 auto;
+            display: block;
+            width: 800px;
+            height:100px;
+            font-size: 35px;
+        }
+    </style>
+</head>
+<body>
+    <div id="showBox">
+        -----
+    </div>
+    <div id="selectedNameBox">
+        <strong>已被抽到的幸运观众</strong>
+        <ol></ol>
+    </div>
+    <input type="button" value="Start">
+</body>
+<script type="text/javascript">
+    var nameList = ["于庆祥","崔长荣","王常岭","赵加振","王立昊","刘佳峰","马志伟","于宏庆","张  琦","赵东方","刘文强","张鑫宇","徐婉婷","杨  丹","关  洋","杨天娇","宋圆圆"
+        ,"刘  鹏","贾  冰","田  帅","张  卓","杨明泽"];
+    var randNum;
+    var count = 0;
+    var showBoxObj = document.getElementById("showBox");
+    var selectedNameBoxObj = document.getElementById("selectedNameBox");
+    var buttonObj = document.getElementsByTagName("input")[0];
+    //true 已停止 false 未开始
+    var flag = false;
+    var timeId;
+    var timeId_bg;
+//   console.log(nameList.length);
+//    console.log(buttonObj);
+//    console.log(Math.floor( Math.random()*nameList.length));
+    function randSelect(){
+        randNum = Math.floor( Math.random()*(nameList.length-1));
+        if (nameList[randNum]){
+            showBoxObj.innerText = nameList[randNum];
+        }else{
+            showBoxObj.innerText = "抽完了下次再来吧！"
+            buttonObj.disabled = "true";
+        }
+
+    }
+
+    function randBgColor() {
+        var str = "#";
+        var array = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
+        for (var i = 0; i < 6; i++) {
+            str += array[parseInt(Math.random() * 15)];
+        }
+        showBoxObj.style.backgroundColor = str;
+    }
+
+    buttonObj.onclick = function (){
+        if (!flag){
+            buttonObj.value = "Stop";
+            if(count != 0){
+                nameList.splice(randNum,1);
+            }
+            count++;
+            timeId_bg = setInterval(randBgColor,50);
+            timeId = setInterval(randSelect,5);
+            flag = true;
+        }else{
+            var element = document.createElement("li");
+            if (nameList[randNum]){
+                selectedNameBoxObj.children[1].appendChild(element).innerText = nameList[randNum];
+            }
+            buttonObj.value = "Start";
+            clearInterval(timeId);
+            clearInterval(timeId_bg);
+            flag = false;
+        }
+    }
+</script>
+</html>
