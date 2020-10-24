@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #box{
+            width: 800px;
+            height: 450px;
+            text-align: center;
+            margin: auto;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            font-size: 82px;
+            color: hotpink;
+            font-weight: bolder;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <p></p>
+    <p></p>
+</div>
+<script type="text/javascript">
+    var boxObj = document.getElementById("box");
+    window.onload = function (){
+        var countDown = function () {
+            //获取当前时间
+            var nowTime = new Date();
+            //设置截止时间
+            var endTime = new Date(2021, 1, 11, 0, 0, 0); //   除夕  Date(2020, 9, 15, 21, 0, 0)
+            var surplusTime = endTime.getTime() - nowTime.getTime();
+            var surplusTime_days = Math.floor((surplusTime/(1000*60*60*24)));
+            var surplusTime_hour = Math.floor((surplusTime % (24 * 60 * 60 * 1000))/(1000*60*60));
+            var surplusTime_minutes = Math.floor((surplusTime % (60 * 60 * 1000)) / (1000*60));
+            var surplusTime_seconds = Math.floor((surplusTime % (60*1000)) / 1000);
+            console.log(surplusTime);
+            surplusTime_days = surplusTime_days<10?"0"+surplusTime_days:surplusTime_days;
+            surplusTime_hour = surplusTime_hour<10?"0"+surplusTime_hour:surplusTime_hour;
+            surplusTime_minutes = surplusTime_minutes<10?"0"+surplusTime_minutes:surplusTime_minutes;
+            surplusTime_seconds = surplusTime_seconds<10?"0"+surplusTime_seconds:surplusTime_seconds;
+            var str = surplusTime_days+"天"+surplusTime_hour+"时"+surplusTime_minutes+"分"+surplusTime_seconds+"秒";
+
+            boxObj.firstElementChild.innerHTML = "距离除夕";//距离21:00下课
+            boxObj.lastElementChild.innerText = str;
+        };
+        var timeId_countDown_1 = setInterval(countDown, 100);
+    }
+    </script>
+    </body>
+    </html>
