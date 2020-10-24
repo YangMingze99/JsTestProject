@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    #small{
+        position: relative;
+        width: 400px;
+        height: 400px;
+        border: 1px solid black;
+        left: 380px;
+        top: -8px;
+    }
+    #select{
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        background: rgba(213, 117, 1, 0.5);
+        display: none;
+        cursor: move;
+    }
+    #big{
+        position: absolute;
+        top: 0;
+        right: 328px;
+        width: 400px;
+        height: 400px;
+        border: 1px solid black;
+        display: none;
+        overflow: hidden;
+    }
+    #big img{
+        position: absolute;
+        display: block;
+    }
+</style>
+<body>
+    <div id="small">
+        <img src="./imgs/m.jpg" alt="">
+        <div id="select"></div>
+    </div>
+
+    <div id="big">
+        <img src="./imgs/b.jpg" alt="">
+    </div>
+
+
+    <script>
+        var smallBoxObj = document.getElementById("small");
+        var selectBoxObj  = document.getElementById("select");
+        var bigImgObj = document.getElementById("big").firstElementChild;
+        smallBoxObj.onmouseover = function (){
+            document.getElementById("big").style.display = "block";
+            selectBoxObj.style.display = "block";
+            smallBoxObj .onmousemove = function (e){
+
+                x = e.clientX-smallBoxObj.offsetWidth-selectBoxObj.offsetWidth/2 <= smallBoxObj.offsetWidth/2?e.clientX-smallBoxObj.offsetWidth-selectBoxObj.offsetWidth/2:smallBoxObj.offsetHeight/2;
+                x= x>=0? x:0;
+                y = e.clientY-selectBoxObj.offsetHeight/2 <= smallBoxObj.offsetHeight/2 ? e.clientY-selectBoxObj.offsetHeight/2:smallBoxObj.offsetHeight/2;
+                y= y>=0? y:0;
+                selectBoxObj.style.left = x+"px";
+                selectBoxObj.style.top = y+"px";
+
+                bigImgObj.style.left = -x*2+"px";
+                bigImgObj.style.top = -y*2+"px";
+            };
+        };
+
+        smallBoxObj .onmouseout = function (){
+            selectBoxObj.style.display = "none";
+            smallBoxObj .onmousemove = null;
+            document.getElementById("big").style.display = "";
+        };
+
+
+
+    </script>
+</body>
+</html>
