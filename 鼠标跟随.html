@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    #box{
+        position: absolute;
+    }
+
+</style>
+<body>
+<div id="box"><img src="03.jpg" alt=""></div>
+<script>
+    var box = document.getElementById("box");
+   document.onmousemove = function (e){
+        var x = e.clientX;
+        var y = e.clientY;
+        box.style.top=y+"px";
+        box.style.left=x+"px";
+    }
+</script>
+</body>
+</html>
