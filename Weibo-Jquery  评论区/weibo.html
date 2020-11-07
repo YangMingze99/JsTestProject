@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/weibo.css">
+    <script src="../../Js/jquery-3.5.1.js"></script>
+</head>
+
+<body>
+<div class="w">
+    <!-- 操作的界面 -->
+    <div class="controls">
+        <img src="images/tip.png" alt=""><br>
+        <textarea placeholder="说点什么吧..." id="area" cols="30" rows="10" maxlength="200"></textarea>
+        <div>
+            <span class="useCount">200</span>
+            <span>/</span>
+            <span>200</span>
+            <button id="send">发布</button>
+        </div>
+    </div>
+    <!-- 微博内容列表 -->
+    <div class="contentList">
+        <ul>
+        </ul>
+    </div>
+</div>
+<script>
+    //发布
+    $("#send").click(function (){
+        if ($("textarea").val()){
+            var newImgObj = $("<img>");
+            var newTimePObj = $("<p></p>");
+            var newPingLunPObj = $("<p></p>");
+            var inputText = $("textarea").val();
+            var newUserSpan = $("<span></span>");
+            var aEditObj = $("<a></a>");
+            var aDeleteObj = $("<a></a>");
+            var time = new Date();
+            var timeStr ="发布于:"+ time.getFullYear() + "/" + (time.getMonth() + 1) + "/" + time.getDate() + "   " + time.getHours() + ":" + time.getMinutes();
+            //ul添加 li
+            $("ul").append($("<li></li>"));
+            //评论淡出
+            $("li").last().hide();
+            $("li").last().show(600);
+            //li添加div
+            $("li").last().append($("<div></div>"));
+            //div设置类名 info
+            $("li").last().children("div").addClass("info");
+            //info 加 img 设置路径
+            $(".info").last().append(newImgObj);
+            newImgObj.attr("src","./images/03.jpg");
+            //info加时间戳
+            $(".info").last().append(newTimePObj);
+            newTimePObj.addClass("time");
+            newTimePObj.html(timeStr);
+            //info 加评论内容并清空输入框内容
+            $(".info").last().append(newPingLunPObj);
+            newPingLunPObj.html(inputText);
+            newPingLunPObj.addClass("specialP");
+            $("textarea").val("");
+            $(".useCount").html(200);
+            //info 用户名
+            $(".info").last().append(newUserSpan);
+            newUserSpan.html("用户"+Math.floor(Math.random()*999+1));
+            //info 修改
+            $(".info").last().append(aEditObj);
+            aEditObj.attr({
+                "href":"#",
+                "class":"aedit",
+                "index":$("li").length
+            });
+            aEditObj.html("修改");
+            aEditObj.click(function (){
+                var newText = prompt("请编辑你的内容:",$("li").eq($(this).attr("index") - 1).children().children().siblings(".specialP").html()) ;
+                if (newText){
+                    timeStr = "最后编辑于:"+ time.getFullYear() + "/" + (time.getMonth() + 1) + "/" + time.getDate() + "   " + time.getHours() + ":" + time.getMinutes();
+                    $("li").eq($(this).attr("index") - 1).children().children().siblings(".specialP").html(newText);
+                    $("li").eq($(this).attr("index") - 1).children().children().siblings(".time").html(timeStr);
+                }
+            })
+            //info 删除
+            $(".info").last().append(aDeleteObj);
+            aDeleteObj.attr({
+                "href":"#",
+                "class":"adelete",
+                "index":$("li").length,
+            });
+           aDeleteObj.html("删除");
+            aDeleteObj.click(function (){
+                $("li").eq($(this).attr("index")-1).hide(500,function (){
+                    $(this).remove();
+                    $(".adelete").each(function (key , num){
+                        $(".aedit").eq(key).attr("index",(key+1));
+                        $(".adelete").eq(key).attr("index",(key+1));
+                    })
+                });
+            })
+        }else{
+            alert("请输入内容!");
+        }
+    })
+    //字数统计
+    $("textarea").keyup(function (){
+        let useLength = $("textarea").val().length ;
+        $(".useCount").html(200-useLength) ;
+    })
+</script>
+</body>
+</html>
