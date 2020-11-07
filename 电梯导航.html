@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../Js/jquery-3.5.1.js"></script>
+</head>
+<style>
+    body{
+        padding: 0;
+        margin: 0;
+    }
+    ul{
+        border: 2px solid green;
+        position: fixed;
+        left: 0;
+        top: 118px;
+        background-color: #ffffff;
+        list-style: none;
+        padding: 0;
+        display: none;
+    }
+    ul li{
+        width: 150px;
+        height: 80px;
+    }
+    .active{
+        border: 5px solid black;
+    }
+    div{
+        width: 100%;
+        height: 755px;
+    }
+</style>
+<body>
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <script>
+        var color = ["pink","red","blue","purple"];
+        $("div").each(function (key,index){
+            $("div").eq(key).css({
+                "background":color[key]
+            })
+            $("li").eq(key).css({
+                "background":color[key]
+            })
+        })
+        $(window).scroll(function (){
+           if ($(window).scrollTop()> 300){
+               $("ul").fadeIn();
+               $("li").eq(Math.floor($(window).scrollTop()/750)).siblings().removeClass("active");
+               $("li").eq(Math.floor($(window).scrollTop()/750)).addClass("active");
+           }else {
+               $("ul").fadeOut();
+           }
+        })
+        $("li").click(function (){
+            $(this).siblings().removeClass("active");
+            $(this).addClass("active");
+            $("body,html").animate({
+                scrollTop : $(this).index()*$("div").height()
+            })
+        })
+
+    </script>
+</body>
+</html>
