@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        ul{
+
+        }
+        ul li{
+            width: 100px;
+            height: 80px;
+            border: 1px solid red;
+        }
+        .content{
+            width: 400px;
+            height: 250px;
+            border: 5px solid hotpink;
+            position: absolute;
+            left: 300px;
+            top:50px;
+            display: none;
+            text-align: center;
+        }
+        .current{
+            background-color: green;
+        }
+    </style>
+    <script src="../Js/jquery-3.5.1.js"></script>
+</head>
+<body>
+    <div id="box">
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+        <div class="content">1</div>
+        <div class="content">2</div>
+        <div class="content">3</div>
+        <div class="content">4</div>
+    </div>
+
+    <script>
+        for (i = 0; i<$("li").length;i++){
+            //A
+    //         $("li").eq(i).click(function () {
+    //             $(this).css("background-color","brown");
+    //             $(this).siblings(). css("background-color","");
+    //             $(".content").hide(1000);
+    //             $($(".content")[$(this).index()]).show(1000);
+    // //            $($(".content")[$(this).index()]).toggle();
+    // //           $(".content").eq($(this).index()).toggle();
+     //       });
+            //class
+            $("li").eq(i).click(function () {
+                $(this).siblings().removeClass("current");
+                $(this).toggleClass("current");
+                $(".content").hide(500);
+                $(".content").eq($(this).index()).toggle("slow");
+            })
+        }
+
+    </script>
+</body>
+</html>
