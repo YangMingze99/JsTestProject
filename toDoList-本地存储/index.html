@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+  <!-- 输入框 -->
+  <div class="plan">
+    <h1>JustDoIt</h1>
+    <div>
+      <input class="txt" placeholder="请输入目标..." type="text">
+      <input type="button" class="add" value="添加">
+    </div>
+  </div>
+  <div class="w">
+    <!-- 正在完成的任务 -->
+    <h2>正在进行的任务</h2>
+    <ol>
+      <!-- <li><input type="checkbox"><span>吃饭</span></li>
+      <li><input type="checkbox"><span>吃饭</span></li>
+      <li><input type="checkbox"><span>吃饭</span></li>
+      <li><input type="checkbox"><span>吃饭</span></li> -->
+    </ol>
+    <!-- 已经完成的任务 -->
+    <h2>已经完成的任务</h2>
+    <ul>
+      <!-- <li><span>吃饭</span></li>
+        <li><span>吃饭</span></li>
+        <li><span>吃饭</span></li>
+        <li><span>吃饭</span></li> -->
+
+    </ul>
+  </div>
+  <script src="lib/jquery-1.12.4.js"></script>
+  <!-- <script src="js/index.js"></script> -->
+  <script type="text/javascript">
+      var str = localStorage.getItem('toDoList');
+      // 判断本地是否有地方存储数据
+      if (str == null) {
+        // 向浏览器本地申请一个地方
+        localStorage.setItem('toDoList', '[{"name":"吃饭","isOk":true},{"name":"睡觉","isOk":false}]');
+        // 重新读取本地数据
+        str = localStorage.getItem('toDoList');
+      }
+      // 把字符串数组 转换为 数组
+      var arr = JSON.parse(str);
+      // 循环遍历
+      for (var i = 0; i < arr.length; i++) {
+        // 取出一个对象
+        var obj = arr[i]; // {name: "吃饭", isOk: true}
+        // 判断
+        if (obj.isOk == true) {
+          // 完成
+          $('<li></li>').attr('num',i).html('<span>' + obj.name + '</span>').appendTo('ul');
+        } else {
+          // 没完成
+          $('<li></li>').attr('num',i).html('<input type="checkbox"><span>' + obj.name + '</span>').appendTo('ol');
+        }
+      }
+
+      // 点击添加：创建li，里面有input，span【里面放的是输入框的内容】
+      $('.add').click(function () {
+        // 获取txt的内容
+        var txt =$('.txt').val();
+        // 创建li
+        var li = $('<li><input type="checkbox"><span>' + txt + '</span></li>');
+        // 加入到ol
+        $('ol').append(li);
+        // 清空txt
+        $('.txt').val('');
+
+
+        // 点击存储内容
+        // {name:txt,isOk:false}
+        arr.push({name:txt,isOk:false});
+        str = JSON.stringify(arr);
+        localStorage.setItem('toDoList',str);
+
+
+      })
+
+      // 点击【ol】input，把对应的li放到ul里面
+      // input是创建出来的，所有得on
+      $('ol').on('click', 'input', function () {
+        // 获取点击li
+        var li = $(this).parent();
+        // 放到ul
+        $('ul').append(li);
+        // input隐藏
+        $(this).hide();
+
+        // 修改数据
+        var i = li.attr('num');
+        // 修改对应的数据的isOK
+        arr[i].isOk = true;
+        // 转成字符串
+        str = JSON.stringify(arr);
+        // 存进去
+        localStorage.setItem('toDoList',str);
+      });
+
+
+
+
+
+
+
+
+    // $('.add').click(function () {
+    //   var val = $('.txt').val();
+    //   var li = $('<li><input type="checkbox"><span>' + val +'</span></li>');
+    //   $('ol').append(li);
+    //   $('.txt').val('');
+
+    //   arr.push( {name:val,isOk:false} );
+    //   str = JSON.stringify(arr);
+    //   localStorage.setItem('toDoList',str);
+
+    // });
+
+    // $('ol').on('click', 'input', function () {
+    //   var li = $(this).parent();
+    //   $('ul').append(li);
+    //   $(this).hide();
+
+    //     var i = li.attr('num');
+    //     arr[i].isOk = true;
+    //     str = JSON.stringify(arr);
+    //     localStorage.setItem('toDoList',str);
+
+    // });
+
+
+  </script>
+
+</body>
+
+</html>
